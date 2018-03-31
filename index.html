@@ -47,8 +47,22 @@
           <li class="nav-item">
             <a class="nav-link" href="login.html">Login</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" id="teste" href="#">Teste</a>
+          </li>
         </ul>
       </div>
+
+
+<!-- apagar -->
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto" id="nomes">
+            
+        </div>
+
+
+
+
     </div>
   </nav>
 
@@ -135,12 +149,12 @@
             </div>
           </div>
           <div class="row align-items-center">
-          <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-right">
-            <h4>Quais cores tem aqui?</h4>
-            <p>Por meio dos jogos do app e do cubo, seu filho vai aprender a identificar corretamente as cores! Os resultados
-              e acertos são reportados diretamente para o seu sistema!</p>
-          </div>
-          <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-right">
+              <h4>Quais cores tem aqui?</h4>
+              <p>Por meio dos jogos do app e do cubo, seu filho vai aprender a identificar corretamente as cores! Os resultados
+                e acertos são reportados diretamente para o seu sistema!</p>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
               <img class="img-fluid" src="img/crianca_3.png">
             </div>
 
@@ -165,6 +179,62 @@
   <!-- Bootstrap core JavaScript -->
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+        var objPai = {
+            "email": "email.do.cara@email.com",
+            "senha": "1234",
+            "nome": "Cara"
+          }
+          console.log(objPai)
+        var url = "http://spacekids-001-site1.dtempurl.com/api/login/cadastrar";
+        
+        $("#teste").click(
+          
+          
+          function(){
+            var url = 'http://spacekids-001-site1.dtempurl.com/api';
+              
+            $.ajax({
+              contentType: "application/json",
+              url: url + '/crianca/listar',
+              method : 'get',
+              // data: objPai,
+              crossDomain : true,
+              success: function(retorno){
+               montaTemplate(retorno);
+                
+              }
+            });
+
+
+        })
+
+
+
+        // FUN'C~OES
+        function montaTemplate(dados){
+          console.log(dados);
+          var template = "";
+          for (let i = 0; i < dados.length; i++) {
+            template += '<li class="nav-item">' +
+                          '<a class="nav-link" href="contato.html">'+dados[i].nome.trim()+' </a>' +
+                        '</li>\n';
+            
+          }
+
+          $("#nomes").html(template);
+
+
+          
+        }
+
+        
+
+
+      })
+  </script>
 
 </body>
 

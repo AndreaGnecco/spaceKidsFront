@@ -60,18 +60,18 @@
 
         <h5>Cadastro de pais</h5>
         <div class="form-group">
-          <input type="text" class="form-control" id="exampleInputTexg1" placeholder="Nome completo">
+          <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome completo">
 
         </div>
         <div class="form-group">
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail">
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail">
 
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+          <input type="password" class="form-control" id="senha" placeholder="Senha">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirme sua senha">
+            <input type="password" class="form-control" id="confirmaSenha" placeholder="Confirme sua senha">
           </div>
         <button class="btn bg-primary" id="btn-cadastrar">CADASTRAR</button>
       </div>
@@ -88,48 +88,43 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <!-- <script src="lib/jquery-3.3.1.min.js"></script> -->
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script>
       $(document).ready(function(){
-        var objPai = {
-            "email": "email.do.cara@email.com",
-            "senha": "1234",
-            "nome": "Cara"
-          }
-        var url = "http://spacekids-001-site1.dtempurl.com/api/login/cadastrar";
+       
+        var url = "http://spacekids-001-site1.dtempurl.com/api";
         
-        $("#btn-cadastrar").click(
+        $("#btn-cadastrar").click(function(){
           
+          var jsonPai = {
+            "nome": $("#nomeCompleto").val(),
+            "email": $("#email").val(),
+            "senha": $("#senha").val(),
+          }
           
-          function(){
-          // $.post(
-          //   "http://spacekids-001-site1.dtempurl.com/api/login/cadastrar",
-          //   objPai,
-          //   function(data, status){
-          //       console.log("Data: " + data + "\nStatus: " + status);
-          //   });
+          console.log(jsonPai);
 
-            console.log('asasdfjalksj');
-            
             $.ajax({
               contentType: "application/json",
-              url: url,
-              method : 'post',
-              data: objPai,
-              crossDomain : true,
+              url: url + '/login/cadastrar',
+              method: 'post',
+              data: jsonPai,
+              crossDomain: true,
               success: function(data){
                 console.log("retorno");
                 console.log(data);
-                
+              },
+              error: function(erro){
+                // console.log('erro: ');
+                // console.log(erro);
               }
             });
-
-
         })
 
       })
+      
+      //fim document.ready
     </script>
 </body>
 
