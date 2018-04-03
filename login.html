@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Conteúdo</title>
+  <title>Space Kids - Login</title>
 
   <!-- Bootstrap core CSS -->
   <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
@@ -30,10 +30,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home
-                <span class="sr-only">(current)</span>
-              </a>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="contato.html">Contato</a>
@@ -41,8 +39,10 @@
             <li class="nav-item">
               <a class="nav-link" href="cadastro.html">Cadastro</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="login.html">Login</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="login.html">Login
+                <span class="sr-only">(current)</span>
+              </a>
             </li>
           </ul>
         </div>
@@ -56,19 +56,25 @@
     <div class="container">
 
       <div class="card bg-white">
-          <img class="dog-side" src="img/dog.png">
+        <img class="dog-side" src="img/dog.png">
 
         <h5>Login</h5>
-        <div class="form-group">
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail">
 
+        <div id="loginErrorMessage"></div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" required>
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+            <input type="password" class="form-control" id="senha" placeholder="Senha" required>
           </div>
-          <button class="btn bg-primary">ENTRAR</button>
-      </div>
+          <div class="text-center">
+            <input type="submit" value="ENTRAR" class="btn bg-primary"/>
+          </div>
+        </form>
 
+      </div>
     </div>
   </section>
 
@@ -83,6 +89,68 @@
   <!-- Bootstrap core JavaScript -->
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      var url = "http://spacekids-001-site1.dtempurl.com/api";
+
+      $("#loginForm").submit(function () {
+
+        fetch(url + '/login/autenticar',
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({
+              "email": $("#email").val(),
+              "senha": $("#senha").val(),
+            })
+          })
+          .then(response => response.json())
+          .then(json => {
+            console.log(json);
+            var autenticacao = json.autenticacao;
+
+            if (autenticacao == false) {
+              console.log("Email e/ou senha inválido");
+
+              // Mostrar mensagem de erro para o usuário
+              showLoginErrorMessage();
+            } else {
+              console.log("Usuário logado com sucesso");
+
+              // Salva token do usuário no localStorage
+              localStorage.setItem('userToken', json.acessToken);
+
+              // Redirecionar usuário para página de listagem de crianças
+              window.location.href = "listar.html";
+
+            }
+          })
+          .catch(error => {
+            console.log("Erro no request de autenticação");
+            console.log(error);
+          })
+
+        // Não recarregar página 
+        return false;
+      })
+    })
+
+    function showLoginErrorMessage() {
+
+      $("#loginErrorMessage").html(
+        "<div class='alert alert-danger alert-dismissable fade show' role='alert'>" +
+        "E-mail e/ou senha inválidos." +
+        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+        "<span aria-hidden='true'>&times;</span>" +
+        "</button>" +
+        "</div>");
+    };
+
+    //fim document.ready
+  </script>
 
 </body>
 
