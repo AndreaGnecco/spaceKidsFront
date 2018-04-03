@@ -92,34 +92,29 @@
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script>
       $(document).ready(function(){
-       
         var url = "http://spacekids-001-site1.dtempurl.com/api";
         
         $("#btn-cadastrar").click(function(){
-          
-          var jsonPai = {
-            "nome": $("#nomeCompleto").val(),
-            "email": $("#email").val(),
-            "senha": $("#senha").val(),
-          }
-          
-          console.log(jsonPai);
 
-            $.ajax({
-              contentType: "application/json",
-              url: url + '/login/cadastrar',
-              method: 'post',
-              data: jsonPai,
-              crossDomain: true,
-              success: function(data){
-                console.log("retorno");
-                console.log(data);
-              },
-              error: function(erro){
-                // console.log('erro: ');
-                // console.log(erro);
-              }
-            });
+          fetch(url + '/login/cadastrar',
+          {
+            headers: {'Content-Type': 'application/json'},
+            method:'POST',
+            body: JSON.stringify({
+              "nome": $("#nomeCompleto").val(),
+              "email": $("#email").val(),
+              "senha": $("#senha").val(),
+              "permissao": 'Pai'
+            })
+          })
+          .then(response => response.json ())
+          .then(json => {
+            console.log('retorno');
+            console.log(json);
+          })
+          .catch(e => {
+
+          })
         })
 
       })

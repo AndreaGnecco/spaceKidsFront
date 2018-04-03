@@ -181,59 +181,59 @@
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    $(document).ready(function(){
-        var objPai = {
-            "email": "email.do.cara@email.com",
-            "senha": "1234",
-            "nome": "Cara"
-          }
-          console.log(objPai)
-        var url = "http://spacekids-001-site1.dtempurl.com/api/login/cadastrar";
+    // $(document).ready(function(){
+    //     var objPai = {
+    //         "email": "email.do.cara@email.com",
+    //         "senha": "1234",
+    //         "nome": "Cara"
+    //       }
+    //       console.log(objPai)
+    //     var url = "http://spacekids-001-site1.dtempurl.com/api/login/cadastrar";
         
-        $("#teste").click(
+    //     $("#teste").click(
           
           
-          function(){
-            var url = 'http://spacekids-001-site1.dtempurl.com/api';
+    //       function(){
+    //         var url = 'http://spacekids-001-site1.dtempurl.com/api';
               
-            $.ajax({
-              contentType: "application/json",
-              url: url + '/crianca/listar',
-              method : 'get',
-              // data: objPai,
-              crossDomain : true,
-              success: function(retorno){
-               montaTemplate(retorno);
+    //         $.ajax({
+    //           contentType: "application/json",
+    //           url: url + '/crianca/listar',
+    //           method : 'get',
+    //           // data: objPai,
+    //           crossDomain : true,
+    //           success: function(retorno){
+    //            montaTemplate(retorno);
                 
-              }
-            });
+    //           }
+    //         });
 
 
-        })
+    //     })
 
 
 
-        // FUN'C~OES
-        function montaTemplate(dados){
-          console.log(dados);
-          var template = "";
-          for (let i = 0; i < dados.length; i++) {
-            template += '<li class="nav-item">' +
-                          '<a class="nav-link" href="contato.html">'+dados[i].nome.trim()+' </a>' +
-                        '</li>\n';
+    //     // FUN'C~OES
+    //     function montaTemplate(dados){
+    //       console.log(dados);
+    //       var template = "";
+    //       for (let i = 0; i < dados.length; i++) {
+    //         template += '<li class="nav-item">' +
+    //                       '<a class="nav-link" href="contato.html">'+dados[i].nome.trim()+' </a>' +
+    //                     '</li>\n';
             
-          }
+    //       }
 
-          $("#nomes").html(template);
+    //       $("#nomes").html(template);
 
 
           
-        }
+    //     }
 
         
 
 
-      })
+    //   })
   </script>
 
 </body>
