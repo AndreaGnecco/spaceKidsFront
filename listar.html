@@ -16,9 +16,49 @@
     <!-- Custom styles for this template -->
     <link href="css/full-slider.css" rel="stylesheet">
 
+    <style>
+        .card {
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-right: 15px;
+        }
+        .card p {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        .card img {
+            display: block;
+        }
+    </style>
+
 </head>
 
 <body class="bg-light">
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Acompanhamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-primary" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
     <!-- Navigation -->
 
@@ -57,6 +97,7 @@
 
 
     <!-- Page Content -->
+
     <section class="py-5">
         <div class="container">
 
@@ -66,13 +107,14 @@
                     <img class="img-thumbnail" src="img/avatares-02.png">
                     <p>Nome</p>
                     <span>Idade</span>
-                    <button class="btn bg-primary">VISUALIZAR</button>
-                </div>
+                    <button class="btn bg-primary" data-toggle="modal" data-target="#exampleModal">VISUALIZAR</button>
 
+
+                </div>
             </div>
 
-        </div>
     </section>
+
 
     <!-- Footer -->
     <footer class="relative-bottom py-5 bg-purple">
@@ -82,12 +124,48 @@
         <!-- /.container -->
     </footer>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- JAVASCRIPT -->
     <!-- Bootstrap core JavaScript -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
     <script>
         $(document).ready(function () {
+
+            Highcharts.setOptions({
+                colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
+                    return {
+                        radialGradient: {
+                            cx: 0.5,
+                            cy: 0.3,
+                            r: 0.7
+                        },
+                        stops: [
+                            [0, color],
+                            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                        ]
+                    };
+                })
+            });
 
 
 
@@ -98,12 +176,98 @@
                     template += '<div class="card card-crianca bg-white align-middle">' +
                         '<img class="img-thumbnail" src="img/avatares-02.png">' +
                         '<p>' + dados[i].nome + '</p>' +
-                        '<span>' + dados[i].idade + '</span>' +
-                        '<button class="btn bg-primary btn-visualizar" id="' + dados[i].criancaId + '">VISUALIZAR</button>' +
+                        '<p>' + dados[i].idade + '</p>' +
+                        '<button class="btn bg-primary" data-id="' + dados[i].criancaId + '" data-toggle="modal" data-target="#exampleModal" id="' + dados[i].criancaId + '">VISUALIZAR</button>' +
                         '</div>';
+
                 }
 
                 $("#criancas").html(template);
+                $("#criancas button").click(gerarGrafico)
+
+            }
+
+
+            function gerarGrafico() {
+                var id = $(this).data('id');
+
+                console.log(id);
+                
+
+                fetch('http://spacekids-001-site1.dtempurl.com/api/Desempenho/'+id,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        // Authorization: localStorage.token
+                        },
+                        method: 'GET'
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        
+                        console.log(data);
+                        let acertos = 0;
+                        let erros = 0;
+                        
+                        //trabalhando com javascript puro pra melhor aprendizado!!
+                        for (let i = 0; i < data.length; i++) {
+                           
+                            if ( data[i].acertou)
+                                acertos++;
+                            else
+                                erros++;
+                        }
+
+                        if (acertos > 0 || erros > 0){
+                            chartData = [
+                                { name: 'Acertos', y: acertos },
+                                { name: 'Erros', y: erros }
+                            ]
+                        } else {
+                            chartData = [{ name: 'Dados Não disponíveis', y: 1 }];
+                        }
+                        
+                        // Build the chart
+                        Highcharts.chart('container', {
+                            chart: {
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                type: 'pie'
+                            },
+                            title: {
+                                text: 'Acertos VS Erros'
+                            },
+                            tooltip: {
+                                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '<b>{point.name}</b>: {point.percentage:.1f} ',
+                                        style: {
+                                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                        },
+                                        connectorColor: 'silver'
+                                    }
+                                }
+                            },
+                            series: [{
+                                name: 'Share',
+                                data: chartData,
+                                // data: [
+                                //     { name: 'Acertos', y: 3 },
+                                //     { name: 'Erros', y: 4 },
+                                   
+                                // ]
+                            }]
+                        });
+                    })
+
+
 
             }
 
@@ -112,7 +276,7 @@
 
             $.ajax({
                 contentType: "application/json",
-                
+
                 url: url + '/crianca/listar',
                 method: 'get',
                 // data: objPai,
@@ -126,13 +290,6 @@
                 }
             })
 
-
-
-
-            //VISUALIZAR O FILHO
-            $('.btn-visualizar').live('click', function(){
-                console.log('funfou');
-            });
 
         })
     </script>
