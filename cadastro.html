@@ -60,20 +60,21 @@
 
         <h5>Cadastro de pais</h5>
 
+        <div id="cadastroSuccessMessage"></div>
         <div id="cadastroErrorMessage"></div>
 
         <form id="cadastroForm">
           <div class="form-group">
-            <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome completo" required>
+            <input type="text" class="form-control" id="nomeCompleto" autocomplete="name" placeholder="Nome completo" required>
           </div>
           <div class="form-group">
-            <input type="email" class="form-control" id="email" placeholder="E-mail" required>
+            <input type="email" class="form-control" id="email" autocomplete="email" placeholder="E-mail" required>
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" id="senha" placeholder="Senha" required>
+            <input type="password" class="form-control" id="senha" minlength="4" placeholder="Senha" required>
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" id="confirmaSenha" placeholder="Confirme sua senha" required>
+            <input type="password" class="form-control" id="confirmaSenha" minlength="4" placeholder="Confirme sua senha" required>
           </div>
           <div class="text-center">
             <input type="submit" value="CADASTRAR" class="btn bg-primary" />
@@ -99,7 +100,7 @@
     $(document).ready(function () {
       var url = "http://spacekids-001-site1.dtempurl.com/api";
 
-      document.getElementById('senha').onchange = validarSenha; 
+      document.getElementById('senha').onchange = validarSenha;
       document.getElementById('confirmaSenha').onkeyup = validarSenha;
 
       $("#cadastroForm").submit(function () {
@@ -120,9 +121,24 @@
           .then(response => response.json())
           .then(json => {
             console.log(json);
-          })
-          .catch(e => {
+            var autenticacao = json.autenticacao;
 
+            if (autenticacao == false) {
+              console.log("Erro no cadastro");
+
+              // Mostrar mensagem de erro para o usuário
+              showCadastroErrorMessage();
+            } else {
+              console.log("Usuário cadastrado com sucesso");
+
+              // Mostrar mensagem de sucesso
+              showCadastroSuccessMessage();
+            }
+            
+          })
+          .catch(error => {
+            console.log("Erro no request de autenticação");
+            console.log(error.message);
           })
 
         // Não recarregar página 
@@ -136,6 +152,26 @@
         } else {
           confirmaSenha.setCustomValidity("");
         }
+      }
+
+      function showCadastroErrorMessage() {
+        $("#cadastroErrorMessage").html(
+          "<div class='alert alert-danger alert-dismissable fade show' role='alert'>" +
+          "Este e-mail já está sendo utilizado." +
+          "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+          "<span aria-hidden='true'>&times;</span>" +
+          "</button>" +
+          "</div>");
+      }
+
+      function showCadastroSuccessMessage() {
+        $("#cadastroSuccessMessage").html(
+          "<div class='alert alert-success alert-dismissable fade show' role='alert'>" +
+          "Cadastro feito com sucesso. Faça seu <a href='login.html'>login</a>." +
+          "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+          "<span aria-hidden='true'>&times;</span>" +
+          "</button>" +
+          "</div>");
       }
     })
   </script>
