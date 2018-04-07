@@ -14,24 +14,6 @@
 
   <!-- Custom styles for this template -->
   <link href="css/sticky-footer-navbar.css" rel="stylesheet">
-
-  <style>
-    .card {
-      flex-direction: row;
-      flex-wrap: wrap;
-      margin-right: 15px;
-    }
-
-    .card p {
-      display: block;
-      width: 100%;
-      text-align: center;
-    }
-
-    .card img {
-      display: block;
-    }
-  </style>
 </head>
 
 <body class="bg-light">
@@ -80,7 +62,7 @@
               <a class="nav-link" href="cadastroKids.html">Cadastrar criança</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Contato</a>
+              <a class="nav-link" href="contato.html">Contato</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="logout" href="">Sair</a>
@@ -95,7 +77,7 @@
   <main role="main" class="container">
     <section class="py-5">
       <div class="container">
-        <div id="criancas" class="card bg-white">
+        <div id="criancas" class="card-criancas bg-white">
         </div>
     </section>
   </main>
@@ -138,7 +120,7 @@
         var template = "";
         // console.log(dados);
         for (let i = 0; i < dados.length; i++) {
-          template += '<div class="card card-crianca bg-white align-middle">' +
+          template += '<div class="card-crianca bg-white">' +
             '<img class="img-thumbnail" src="img/avatares-02.png">' +
             '<p>' + dados[i].nome + '</p>' +
             '<p>' + dados[i].idade + '</p>' +
