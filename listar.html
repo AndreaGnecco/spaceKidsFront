@@ -121,7 +121,7 @@
         // console.log(dados);
         for (let i = 0; i < dados.length; i++) {
           template += '<div class="card-crianca bg-white">' +
-            '<img class="img-thumbnail" src="img/avatares-02.png">' +
+            '<img class="img-thumbnail" src="img/avatar-' + dados[i].sexo + '.png">' +
             '<p>' + dados[i].nome + '</p>' +
             '<p>' + dados[i].idade + '</p>' +
             '<button class="btn bg-primary" data-id="' + dados[i].criancaId + '" data-toggle="modal" data-target="#exampleModal" id="' + dados[i].criancaId + '">VISUALIZAR</button>' +
@@ -205,6 +205,24 @@
                 // ]
               }]
             });
+          })
+      }
+
+      function deletarCrianca(id) {
+        fetch('http://spacekids-001-site1.dtempurl.com/api/deletar/' + id, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.userToken
+          },
+          method: 'DELETE'
+        }).then(response => response.json())
+          .then(json => {
+            console.log(json);
+            listaCriancas(json);
+          })
+          .catch(error => {
+            console.log("Erro ao deletar criança");
+            console.log(error.message);
           })
       }
 
