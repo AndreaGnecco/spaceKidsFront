@@ -13,6 +13,9 @@
   <!-- Bootstrap core CSS -->
   <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
+  <!-- Custom styles for this template -->
+  <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+
 </head>
 
 <body class="bg-light">
@@ -48,45 +51,46 @@
         </div>
       </div>
     </nav>
-
   </header>
 
   <!-- Page Content -->
-  <section class="py-5 m-auto">
-    <div class="container">
+  <main role="main" class="container">
+    <section class="py-5 m-auto">
+      <div class="container">
 
-      <div class="card bg-white">
-        <img class="dog-side" src="img/dog.png">
+        <div class="card bg-white">
+          <img class="dog-side" src="img/dog.png">
 
-        <h5>Cadastro de pais</h5>
+          <h5>Cadastro de pais</h5>
 
-        <div id="cadastroSuccessMessage"></div>
-        <div id="cadastroErrorMessage"></div>
+          <div id="cadastroSuccessMessage"></div>
+          <div id="cadastroErrorMessage"></div>
 
-        <form id="cadastroForm">
-          <div class="form-group">
-            <input type="text" class="form-control" id="nomeCompleto" autocomplete="name" placeholder="Nome completo" required>
-          </div>
-          <div class="form-group">
-            <input type="email" class="form-control" id="email" autocomplete="email" placeholder="E-mail" required>
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" id="senha" minlength="4" placeholder="Senha" required>
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" id="confirmaSenha" minlength="4" placeholder="Confirme sua senha" required>
-          </div>
-          <div class="text-center">
-            <input type="submit" value="CADASTRAR" class="btn bg-primary" />
-          </div>
-        </form>
+          <form id="cadastroForm">
+            <div class="form-group">
+              <input type="text" class="form-control" id="nomeCompleto" autocomplete="name" placeholder="Nome completo" required>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" id="email" autocomplete="email" placeholder="E-mail" required>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="senha" minlength="4" placeholder="Senha" required>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="confirmaSenha" minlength="4" placeholder="Confirme sua senha" required>
+            </div>
+            <div class="text-center">
+              <input type="submit" value="CADASTRAR" class="btn bg-primary" />
+            </div>
+          </form>
+        </div>
+
       </div>
-
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- Footer -->
-  <footer class="relative-bottom py-5 bg-purple">
+  <footer class="footer bg-purple">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Space Kids 2018</p>
     </div>
@@ -134,7 +138,7 @@
               // Mostrar mensagem de sucesso
               showCadastroSuccessMessage();
             }
-            
+
           })
           .catch(error => {
             console.log("Erro no request de autenticação");

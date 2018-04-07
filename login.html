@@ -13,6 +13,9 @@
   <!-- Bootstrap core CSS -->
   <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
+  <!-- Custom styles for this template -->
+  <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+
 </head>
 
 <body class="bg-light">
@@ -48,38 +51,39 @@
         </div>
       </div>
     </nav>
-
   </header>
 
   <!-- Page Content -->
-  <section class="py-5 m-auto">
-    <div class="container">
+  <main role="main" class="container">
+    <section class="py-5 m-auto">
+      <div class="container">
 
-      <div class="card bg-white">
-        <img class="dog-side" src="img/dog.png">
+        <div class="card bg-white">
+          <img class="dog-side" src="img/dog.png">
 
-        <h5>Login</h5>
+          <h5>Login</h5>
 
-        <div id="loginErrorMessage"></div>
+          <div id="loginErrorMessage"></div>
 
-        <form id="loginForm">
-          <div class="form-group">
-            <input type="email" class="form-control" id="email" placeholder="E-mail" required>
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" id="senha" placeholder="Senha" required>
-          </div>
-          <div class="text-center">
-            <input type="submit" value="ENTRAR" class="btn bg-primary"/>
-          </div>
-        </form>
+          <form id="loginForm">
+            <div class="form-group">
+              <input type="email" class="form-control" id="email" placeholder="E-mail" required>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="senha" placeholder="Senha" required>
+            </div>
+            <div class="text-center">
+              <input type="submit" value="ENTRAR" class="btn bg-primary" />
+            </div>
+          </form>
 
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- Footer -->
-  <footer class="relative-bottom py-5 bg-purple">
+  <footer class="footer bg-purple">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Space Kids 2018</p>
     </div>
