@@ -119,8 +119,9 @@
       function listaCriancas(dados) {
         var template = "";
         // console.log(dados);
-        for (let i = 0; i < dados.length; i++) {
+        for (let i = 0; i < dados.length; i++) {            
           template += '<div class="card-crianca bg-white">' +
+            '<div class="closeButton"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>' +
             '<img class="img-thumbnail" src="img/avatar-' + dados[i].sexo + '.png">' +
             '<p>' + dados[i].nome + '</p>' +
             '<p>' + dados[i].idade + '</p>' +
