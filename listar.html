@@ -119,9 +119,11 @@
       function listaCriancas(dados) {
         var template = "";
         // console.log(dados);
-        for (let i = 0; i < dados.length; i++) {            
+        for (let i = 0; i < dados.length; i++) {
           template += '<div class="card-crianca bg-white">' +
-            '<div class="closeButton"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>' +
+            '<div class="closeButton">' +
+            '<button type="button" class="close" id="' + dados[i].criancaId + '" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span></button></div>' +
             '<img class="img-thumbnail" src="img/avatar-' + dados[i].sexo + '.png">' +
             '<p>' + dados[i].nome + '</p>' +
             '<p>' + dados[i].idade + '</p>' +
@@ -209,18 +211,29 @@
           })
       }
 
+      $(document).on('click', '.closeButton', function (event) {
+        console.log("Deletar Criança");
+        console.log($(this));
+        console.log($(this).find('.close'));
+
+        var idCrianca = $(this).find('.close')[0].id;
+        console.log("Id Criança " + idCrianca);
+
+        deletarCrianca(idCrianca);
+      });
+
       function deletarCrianca(id) {
-        fetch('http://spacekids-001-site1.dtempurl.com/api/deletar/' + id, {
+        fetch('http://spacekids-001-site1.dtempurl.com/api/crianca/deletar/' + id, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.userToken
           },
           method: 'DELETE'
-        }).then(response => response.json())
-          .then(json => {
-            console.log(json);
-            listaCriancas(json);
-          })
+        }).then(response => console.log(response))
+          // .then(json => {
+          //   console.log(json);
+          //   listaCriancas(json);
+          // })
           .catch(error => {
             console.log("Erro ao deletar criança");
             console.log(error.message);
